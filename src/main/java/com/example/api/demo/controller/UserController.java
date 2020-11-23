@@ -17,8 +17,9 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    UserService userService;
 
+    /*
     @PostMapping
     public ResponseEntity<User> create(@RequestBody User user) {
         User dbUser = userService.create(user);
@@ -29,12 +30,20 @@ public class UserController {
                 .toUri();
         return ResponseEntity.created(location).body(dbUser);
     }
+ */
+
+    @PostMapping
+    public void create(@RequestBody User user) {
+        userService.create(user);
+    }
+
 
     @DeleteMapping("/{id}")
     void delete(@PathVariable Long id) {
         userService.delete(id);
     }
 
+    /*
     @GetMapping("/{id}")
     ResponseEntity<?> getById(@PathVariable Long id) {
         try {
@@ -44,16 +53,27 @@ public class UserController {
         }
     }
 
+     */
+
+    @GetMapping("/{id}")
+    public User getById (@PathVariable(value = "id") Long id) throws MyNotFoundException {
+        return userService.getById(id);
+    }
+
     @GetMapping
-    List<User> getAll() {
+    public List<User> getAll() {
         return userService.getAll();
     }
 
 
+
+/*
     @PutMapping("/{id}")
     User update(@RequestBody User user, @PathVariable Long id) {
         return userService.update(user, id);
     }
 
+
+ */
 
 }
